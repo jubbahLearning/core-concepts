@@ -11,23 +11,17 @@ env:
     NICKNAME: "007"
 
 jobs:
-    deploy-on-ubuntu:
+    deploy:
+        strategy:
+          matrix:
+            os: [ubuntu-latest, ubuntu-20.04, windows-latest]
+            images: [hello-world, alpine]
         timeout-minutes: 1
-        runs-on: ubuntu-latest
+        runs-on: ${{ matrix.os }}
         steps:
-            - name: Echo Docker Details
-              run: docker info
-
-            - name: Echo FirstName
-              run: echo "Hello ${{ env.ALIAS }} ${{ env.NAME }}"
-
-            - name: Sleep 5
-              run: sleep 5
-    
-    deploy-on-windows:
-        timeout-minutes: 1
-        runs-on: windows-latest
-        steps:
+            - name: Run Images
+              run: docker run ${{ matrix.images }}
+              
             - name: Greetings
               run: |
                 echo "My name is ${{ env.SURNAME }}"
