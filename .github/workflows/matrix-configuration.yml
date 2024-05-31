@@ -1,0 +1,41 @@
+name: Matrix Configuration
+
+on:
+    push:
+    workflow_dispatch:
+
+env:
+    NAME: "James"
+    SURNAME: "Bond"
+    ALIAS: "Mr"
+    NICKNAME: "007"
+
+jobs:
+    deploy-on-ubuntu:
+        timeout-minutes: 1
+        runs-on: ubuntu-latest
+        steps:
+            - name: Echo Docker Details
+              run: docker info
+
+            - name: Echo FirstName
+              run: echo "Hello ${{ env.ALIAS }} ${{ env.NAME }}"
+
+            - name: Sleep 5
+              run: sleep 5
+    
+    deploy-on-windows:
+        timeout-minutes: 1
+        runs-on: windows-latest
+        steps:
+            - name: Greetings
+              run: |
+                echo "My name is ${{ env.SURNAME }}"
+                sleep 2
+                echo "Hello ${{ env.NAME }} ${{ env.SURNAME }}"
+            
+            - name: Welcome
+              run: |
+                echo "Hello ${{ env.ALIAS}} ${{ env.SURNAME }}"
+                sleep 2
+                echo "Nice to see you ${{ env.ALIAS }}"
